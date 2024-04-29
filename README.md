@@ -25,6 +25,13 @@ This project aims to improve the user experience of MetaMask wallet users by int
 
 For a detailed walkthrough of our project and its features, please view our [presentation video](https://drive.google.com/file/d/1PB6jrlzQFWfZG0xW-ykh7P2MpyuHSFht/view?usp=sharing).
 
+# Start backend
+
+- navigate to the backend folder
+- run `npm install`
+- run `node server.js`
+- backend should be running!
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
