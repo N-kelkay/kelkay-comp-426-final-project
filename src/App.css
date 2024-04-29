@@ -1,0 +1,23 @@
+:root {
+  --shadowDark: #D9DDE6;
+  --background: #E4E9F2;
+  --shadowLight: #EFF5FE;
+}
+
+/* center the whole page */
+body {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  padding: 2em;
+}
+
+.App {
+  height: 100vh; 
+}
+
+.custom-box {
+border-radius: 25px;
+padding: 1.5rem;
+box-shadow: 8px 8px 15px var(--shadowDark), -8px -8px 15px var(--shadowLight);
+}
