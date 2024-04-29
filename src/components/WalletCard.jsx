@@ -21,8 +21,15 @@ const WalletCard = () => {
   const [message, setMessage] = useState(null);
   const [isConnnected, setIsConnected] = useState(false);
 
+  useEffect(() => {
+    fetch("http://localhost:3001/api/data/test") // Backend endpoint
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  }, []);
+
   // ---------------- MetaMask related functionalities ----------------
   const connectWalletHandler = async () => {
+    console.log("Hi---------");
     try {
       if (!window.ethereum) {
         throw new Error("Please install MetaMask");
@@ -32,7 +39,10 @@ const WalletCard = () => {
         method: "net_version",
       });
 
-      if (networkVersion !== "5") {
+      console.log({ networkVersion });
+
+      if (networkVersion !== "59141") {
+        console.log({ networkVersion });
         throw new Error("Please connect to Goerli Test Network");
       }
 
@@ -41,7 +51,10 @@ const WalletCard = () => {
       successMessageDisplay("Successfully Connected to Wallet!");
     } catch (error) {
       console.log("error------", error);
-      errorMessageDisplay("Error connecting to wallet. Check if you are connected to the correct network!", error);
+      errorMessageDisplay(
+        "Error connecting to wallet. Check if you are connected to the correct network!",
+        error
+      );
     }
   };
 
@@ -88,16 +101,18 @@ const WalletCard = () => {
   // fetches the user transactions
   const fetchTransactionHistory = async (address) => {
     try {
-      const API_ENDPOINT = `https://api-goerli.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=539BR6VBD82DVVP85KHDAHF9M5DB7NSNJI`;
-      const response = await fetch(API_ENDPOINT);
-      const { result } = await response.json();
-
-      if (result.length === 0) {
-        setUserTransactions(null);
-        return;
-      }
-
-      setUserTransactions(result);
+      // user backend to fetch data
+      fetch(`http://localhost:3001/api/data/transactions/${address}`) // Backend endpoint
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("-----fetched");
+          console.log({ data });
+          if (data.length === 0) {
+            setUserTransactions(null);
+            return;
+          }
+          setUserTransactions(data.transactions);
+        });
     } catch (error) {
       errorMessageDisplay("Error fetching transaction history ", error);
     }
